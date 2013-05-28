@@ -1,12 +1,6 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package TokenGenerator;
 import javax.microedition.rms.*;
 import java.io.*;
-
 
 /**
  *
@@ -51,7 +45,7 @@ public class StockDB {
     public void close() throws RecordStoreNotOpenException, RecordStoreException {
         if (rs.getNumRecords() == 0) {
             String fileName = rs.getName();
-            rs.deleteRecordStore(fileName);
+            RecordStore.deleteRecordStore(fileName);
             rs.closeRecordStore();
         } else {
             rs.closeRecordStore();
@@ -72,4 +66,3 @@ public class StockDB {
         return new String(recData, 0, len);
     }
 }
-

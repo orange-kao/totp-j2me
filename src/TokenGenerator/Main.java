@@ -1,17 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package TokenGenerator;
 import java.util.*;
-
-
 import javax.microedition.midlet.*;
 import javax.microedition.lcdui.*;
-import javax.microedition.rms.*;
-import java.io.*;
-
 
 /**
  * @author bruj0
@@ -60,7 +50,7 @@ public class Main extends MIDlet implements CommandListener {
         db = new StockDB("TokenKey");
         TokenKey = db.readRecord(1);
         TokenGen = new TokenGen(TokenKey);
-        //GEN-LINE:|0-initialize|1|0-postInitialize
+//GEN-LINE:|0-initialize|1|0-postInitialize
         // write post-initialize user code here
     }//GEN-BEGIN:|0-initialize|2|
     //</editor-fold>//GEN-END:|0-initialize|2|
@@ -82,7 +72,7 @@ public class Main extends MIDlet implements CommandListener {
      */
     public void resumeMIDlet() {//GEN-END:|4-resumeMIDlet|0|4-preAction
         // write pre-action user code here
-        //GEN-LINE:|4-resumeMIDlet|1|4-postAction
+//GEN-LINE:|4-resumeMIDlet|1|4-postAction
         // write post-action user code here
     }//GEN-BEGIN:|4-resumeMIDlet|2|
     //</editor-fold>//GEN-END:|4-resumeMIDlet|2|
@@ -329,4 +319,3 @@ public class Main extends MIDlet implements CommandListener {
         }
     }
 }
-

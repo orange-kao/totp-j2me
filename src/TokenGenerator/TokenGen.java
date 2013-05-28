@@ -1,36 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package TokenGenerator;
 
 import java.util.Date;
 import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
-import java.io.ByteArrayInputStream;
-import java.io.DataInput;
-import java.io.DataInputStream;
-import java.io.IOException;
 import java.math.BigInteger;
-
-//import net.dclausen.microfloat.MicroDouble;
-
-
-
 
 /**
  *
  * @author bruj0
  */
 public class TokenGen {
-    private static final int[] DIGITS_POWER
-        // 0 1  2   3    4     5      6       7        8
-        = {1,10,100,1000,10000,100000,1000000,10000000,100000000 };
-
-    private static final int PASS_CODE_LENGTH = 6;
-
     private final int PIN_MODULO = 1000000;
     private String key = null;
     private byte[] decodedKey = null; //Base32.decode(key);
@@ -69,9 +49,7 @@ public class TokenGen {
 
         int pinValue = binary % PIN_MODULO;
 
-
         return padOutput (pinValue);
-
     }
     public void setKey(String newKey) {
         if(newKey.length() <= 0) {
@@ -148,4 +126,3 @@ public class TokenGen {
         return rslt;
     }
 }
-
