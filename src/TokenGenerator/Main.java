@@ -36,13 +36,10 @@ public class Main extends MIDlet implements CommandListener {
     private String TokenKey="Test";
     private StockDB db = null;
 
-
-
     /**
      * The HelloMIDlet constructor.
      */
     public Main() {
-        
 
     }
 
@@ -57,13 +54,13 @@ public class Main extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:|0-initialize|0|0-preInitialize
         // write pre-initialize user code here
 
-            timer = new Timer();
-            timerTaskOne = new MyTimerTask();
-            timer.schedule(timerTaskOne, 0, 1000);
-            db = new StockDB("TokenKey");
-            TokenKey = db.readRecord(1);
-            TokenGen = new TokenGen(TokenKey);
-//GEN-LINE:|0-initialize|1|0-postInitialize
+        timer = new Timer();
+        timerTaskOne = new MyTimerTask();
+        timer.schedule(timerTaskOne, 0, 1000);
+        db = new StockDB("TokenKey");
+        TokenKey = db.readRecord(1);
+        TokenGen = new TokenGen(TokenKey);
+        //GEN-LINE:|0-initialize|1|0-postInitialize
         // write post-initialize user code here
     }//GEN-BEGIN:|0-initialize|2|
     //</editor-fold>//GEN-END:|0-initialize|2|
@@ -85,7 +82,7 @@ public class Main extends MIDlet implements CommandListener {
      */
     public void resumeMIDlet() {//GEN-END:|4-resumeMIDlet|0|4-preAction
         // write pre-action user code here
-//GEN-LINE:|4-resumeMIDlet|1|4-postAction
+        //GEN-LINE:|4-resumeMIDlet|1|4-postAction
         // write post-action user code here
     }//GEN-BEGIN:|4-resumeMIDlet|2|
     //</editor-fold>//GEN-END:|4-resumeMIDlet|2|
@@ -150,8 +147,6 @@ public class Main extends MIDlet implements CommandListener {
     }//GEN-BEGIN:|7-commandAction|10|
     //</editor-fold>//GEN-END:|7-commandAction|10|
 
-
-
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: exitCommand ">//GEN-BEGIN:|18-getter|0|18-preInit
     /**
      * Returns an initiliazed instance of exitCommand component.
@@ -185,11 +180,6 @@ public class Main extends MIDlet implements CommandListener {
         return form;
     }
     //</editor-fold>//GEN-END:|14-getter|2|
-    //</editor-fold>
-
-
-
-
 
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Token_stringItem ">//GEN-BEGIN:|34-getter|0|34-preInit
     /**
@@ -270,8 +260,6 @@ public class Main extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|61-getter|2|
 
-
-
     //<editor-fold defaultstate="collapsed" desc=" Generated Getter: SecretTextfield ">//GEN-BEGIN:|71-getter|0|71-preInit
     /**
      * Returns an initiliazed instance of SecretTextfield component.
@@ -286,33 +274,6 @@ public class Main extends MIDlet implements CommandListener {
         return SecretTextfield;
     }
     //</editor-fold>//GEN-END:|71-getter|2|
-
-
-
-
-    //</editor-fold>
-
-
-
-
-
-
-    //</editor-fold>
-
-
-
-
-    //</editor-fold>
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Returns a display instance.
@@ -357,18 +318,15 @@ public class Main extends MIDlet implements CommandListener {
      * @param unconditional if true, then the MIDlet has to be unconditionally terminated and all resources has to be released.
      */
     public void destroyApp(boolean unconditional) {
-         try {
-        db.close();
-      } catch(Exception e) {}
+        try {
+            db.close();
+        } catch(Exception e) {}
     }
 
-
-private class MyTimerTask  extends TimerTask{
-
- public final void run(){
-    Token_stringItem.setText(TokenGen.GenToken());
-  }
-
+    private class MyTimerTask extends TimerTask{
+        public final void run(){
+            Token_stringItem.setText(TokenGen.GenToken());
+        }
+    }
 }
 
-}
