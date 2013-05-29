@@ -42,14 +42,14 @@ public class StockDB {
             rse.printStackTrace();
         }
     }
-    public void close() throws RecordStoreNotOpenException, RecordStoreException {
-        if (rs.getNumRecords() == 0) {
-            String fileName = rs.getName();
-            RecordStore.deleteRecordStore(fileName);
+    public void close() {
+        try {
+            if (rs.getNumRecords() == 0) {
+                String fileName = rs.getName();
+                RecordStore.deleteRecordStore(fileName);
+            }
             rs.closeRecordStore();
-        } else {
-            rs.closeRecordStore();
-        }
+        } catch(Exception e) {}
     }
     public String readRecord(int index) {
         byte [] recData = null;

@@ -308,9 +308,7 @@ public class Main extends MIDlet implements CommandListener {
      * @param unconditional if true, then the MIDlet has to be unconditionally terminated and all resources has to be released.
      */
     public void destroyApp(boolean unconditional) {
-        try {
-            db.close();
-        } catch(Exception e) {}
+        db.close();
     }
 
     private class MyTimerTask extends TimerTask{
