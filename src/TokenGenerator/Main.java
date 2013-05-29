@@ -44,12 +44,12 @@ public class Main extends MIDlet implements CommandListener {
     private void initialize() {//GEN-END:|0-initialize|0|0-preInitialize
         // write pre-initialize user code here
 
-        timer = new Timer();
-        timerTaskOne = new MyTimerTask();
-        timer.schedule(timerTaskOne, 0, 1000);
         db = new StockDB("TokenKey");
         TokenKey = db.readRecord(1);
         TokenGen = new TokenGen(TokenKey);
+        timer = new Timer();
+        timerTaskOne = new MyTimerTask();
+        timer.schedule(timerTaskOne, 0, 1000);
 //GEN-LINE:|0-initialize|1|0-postInitialize
         // write post-initialize user code here
     }//GEN-BEGIN:|0-initialize|2|
