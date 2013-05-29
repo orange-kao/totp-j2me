@@ -10,23 +10,28 @@ import java.math.BigInteger;
  *
  * @author bruj0
  */
-public class TokenGen {
-    private final int PIN_MODULO = 1000000;
-    private String key = null;
-    private byte[] decodedKey = null; //Base32.decode(key);
+public final class TokenGen {
+    private int pinModulo = 1000000;
+    private byte[] decodedKey = null;
+    private long previousT = 0L;
+    private String previousOtp = null;
 
     public TokenGen(String newKey) {
-        if(newKey.length() <= 0) {
-            newKey="None";
-        }
-        key = newKey;
-        decodedKey = Base32.decode(key);
+        setKey(newKey);
     }
-    public String GenToken() {
+    public String genToken() {
         long ts = (new Date()).getTime() / 1000;
-        long T = ts / 30;
+        long t = ts / 30;
+        if (t == previousT) {
+            return previousOtp;
+        }
+        previousT = t;
+        previousOtp = privGenToken(t);
+        return previousOtp;
+    }
+    private String privGenToken(long t) {
         String steps = "0";
-        steps = toHexString(T).toUpperCase();
+        steps = toHexString(t).toUpperCase();
         while(steps.length() < 16 ) {
             steps = "0" + steps;
         }
@@ -47,19 +52,18 @@ public class TokenGen {
             ((hash[offset + 2] & 0xff) << 8) |
             (hash[offset + 3] & 0xff);
 
-        int pinValue = binary % PIN_MODULO;
+        int pinValue = binary % pinModulo;
 
         return padOutput (pinValue);
     }
     public void setKey(String newKey) {
         if(newKey.length() <= 0) {
-            newKey="None";
+            newKey="";
         }
-        key=newKey;
-        decodedKey = Base32.decode(key);
+        decodedKey = Base32.decode(newKey);
     }
 
-    private String padOutput(int value) {
+    private static String padOutput(int value) {
         String result = Integer.toString(value);
         for (int i = result.length(); i < 6; i++) {
             result = "0" + result;
@@ -77,7 +81,7 @@ public class TokenGen {
         }
         return ret;
     }
-    public static String toHexString(long l) {
+    private static String toHexString(long l) {
         StringBuffer buf = new StringBuffer();
         String lo = Integer.toHexString((int) l);
         if (l > 0xffffffffl) {

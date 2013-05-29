@@ -313,7 +313,7 @@ public class Main extends MIDlet implements CommandListener {
 
     private class MyTimerTask extends TimerTask{
         public final void run(){
-            Token_stringItem.setText(TokenGen.GenToken());
+            Token_stringItem.setText(TokenGen.genToken());
         }
     }
 }
