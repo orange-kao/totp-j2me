@@ -12,16 +12,39 @@ import java.math.BigInteger;
  */
 public final class TokenGen {
     private int pinModulo = 1000000;
+    private int x = 30;
+    private long t0 = 0L;
     private byte[] decodedKey = null;
     private long previousT = 0L;
     private String previousOtp = null;
 
     public TokenGen(String newKey) {
-        setKey(newKey);
+        reconfigure(newKey);
+    }
+    public TokenGen(String newKey, int newX) {
+        reconfigure(newKey);
+        x = newX;
+    }
+    public TokenGen(String newKey, int newX, long newT0) {
+        reconfigure(newKey);
+        x = newX;
+        t0 = newT0;
+    }
+    public void reconfigure(String newKey) {
+        if(newKey.length() <= 0) {
+            newKey="";
+        }
+        decodedKey = Base32.decode(newKey);
+        previousT = 0L;
+    }
+    public void reconfigure(String newKey, int newX, long newT0) {
+        reconfigure(newKey);
+        x = newX;
+        t0 = newT0;
     }
     public String genToken() {
         long ts = (new Date()).getTime() / 1000;
-        long t = ts / 30;
+        long t = (ts - t0) / x;
         if (t == previousT) {
             return previousOtp;
         }
@@ -44,7 +67,6 @@ public final class TokenGen {
         hmac.update(msg, 0, msg.length);
         hmac.doFinal(hash, 0);
 
-
         int offset = hash[hash.length - 1] & 0xF;
         int binary =
             ((hash[offset] & 0x7f) << 24) |
@@ -56,13 +78,6 @@ public final class TokenGen {
 
         return padOutput (pinValue);
     }
-    public void setKey(String newKey) {
-        if(newKey.length() <= 0) {
-            newKey="";
-        }
-        decodedKey = Base32.decode(newKey);
-    }
-
     private static String padOutput(int value) {
         String result = Integer.toString(value);
         for (int i = result.length(); i < 6; i++) {

@@ -127,7 +127,7 @@ public class Main extends MIDlet implements CommandListener {
                     String tmp="newToken="+TokenKey;
                     form1.append(tmp);
                 }*/
-                TokenGen.setKey(TokenKey);
+                TokenGen.reconfigure(TokenKey);
                 db.saveRecord(TokenKey);
                 switchDisplayable(null, getForm());//GEN-LINE:|7-commandAction|8|66-postAction
                 // write post-action user code here
