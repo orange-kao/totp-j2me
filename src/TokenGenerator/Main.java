@@ -15,15 +15,17 @@ public class Main extends MIDlet implements CommandListener {
     private Command OKCommand;
     private Command exitCommand;
     private Command itemCommand;
-    private Form form;
-    private StringItem Token_stringItem;
-    private Form form1;
-    private TextField SecretTextfield;
+    private Form formMain;
+    private StringItem stringItemToken;
+    private Form formConfig;
+    private TextField textFieldSecretKey;
+    private TextField textFieldT0;
+    private TextField textFieldX;
     //</editor-fold>//GEN-END:|fields|0|
     private Timer timer;
     private MyTimerTask timerTaskOne;
     private TokenGen TokenGen;
-    private String TokenKey="Test";
+    private String TokenKey="";
     private StockDB db = null;
 
     /**
@@ -61,7 +63,7 @@ public class Main extends MIDlet implements CommandListener {
      */
     public void startMIDlet() {//GEN-END:|3-startMIDlet|0|3-preAction
         // write pre-action user code here
-        switchDisplayable(null, getForm());//GEN-LINE:|3-startMIDlet|1|3-postAction
+        switchDisplayable(null, getFormMain());//GEN-LINE:|3-startMIDlet|1|3-postAction
         // write post-action user code here
     }//GEN-BEGIN:|3-startMIDlet|2|
     //</editor-fold>//GEN-END:|3-startMIDlet|2|
@@ -103,25 +105,15 @@ public class Main extends MIDlet implements CommandListener {
      */
     public void commandAction(Command command, Displayable displayable) {//GEN-END:|7-commandAction|0|7-preCommandAction
         // write pre-action user code here
-        if (displayable == form) {//GEN-BEGIN:|7-commandAction|1|19-preAction
-            if (command == exitCommand) {//GEN-END:|7-commandAction|1|19-preAction
-                // write pre-action user code here
-                exitMIDlet();//GEN-LINE:|7-commandAction|2|19-postAction
-                // write post-action user code here
-            } else if (command == itemCommand) {//GEN-LINE:|7-commandAction|3|60-preAction
-                // write pre-action user code here
-                switchDisplayable(null, getForm1());//GEN-LINE:|7-commandAction|4|60-postAction
-                // write post-action user code here
-            }//GEN-BEGIN:|7-commandAction|5|69-preAction
-        } else if (displayable == form1) {
-            if (command == CancelCommand) {//GEN-END:|7-commandAction|5|69-preAction
+        if (displayable == formConfig) {//GEN-BEGIN:|7-commandAction|1|69-preAction
+            if (command == CancelCommand) {//GEN-END:|7-commandAction|1|69-preAction
                 // write pre-action user code here
 
-                switchDisplayable(null, getForm());//GEN-LINE:|7-commandAction|6|69-postAction
+                switchDisplayable(null, getFormMain());//GEN-LINE:|7-commandAction|2|69-postAction
                 // write post-action user code here
-            } else if (command == OKCommand) {//GEN-LINE:|7-commandAction|7|66-preAction
+            } else if (command == OKCommand) {//GEN-LINE:|7-commandAction|3|66-preAction
                 // write pre-action user code here
-                TokenKey = SecretTextfield.getString();
+                TokenKey = textFieldSecretKey.getString();
                 /*if(TokenKey.length() > 0)
                 {
                     String tmp="newToken="+TokenKey;
@@ -129,7 +121,17 @@ public class Main extends MIDlet implements CommandListener {
                 }*/
                 TokenGen.reconfigure(TokenKey);
                 db.saveRecord(TokenKey);
-                switchDisplayable(null, getForm());//GEN-LINE:|7-commandAction|8|66-postAction
+                switchDisplayable(null, getFormMain());//GEN-LINE:|7-commandAction|4|66-postAction
+                // write post-action user code here
+            }//GEN-BEGIN:|7-commandAction|5|19-preAction
+        } else if (displayable == formMain) {
+            if (command == exitCommand) {//GEN-END:|7-commandAction|5|19-preAction
+                // write pre-action user code here
+                exitMIDlet();//GEN-LINE:|7-commandAction|6|19-postAction
+                // write post-action user code here
+            } else if (command == itemCommand) {//GEN-LINE:|7-commandAction|7|60-preAction
+                // write pre-action user code here
+                switchDisplayable(null, getFormConfig());//GEN-LINE:|7-commandAction|8|60-postAction
                 // write post-action user code here
             }//GEN-BEGIN:|7-commandAction|9|7-postCommandAction
         }//GEN-END:|7-commandAction|9|7-postCommandAction
@@ -152,38 +154,39 @@ public class Main extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|18-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: form ">//GEN-BEGIN:|14-getter|0|14-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: formMain ">//GEN-BEGIN:|14-getter|0|14-preInit
     /**
-     * Returns an initiliazed instance of form component.
+     * Returns an initiliazed instance of formMain component.
      * @return the initialized component instance
      */
-    public Form getForm() {
-        if (form == null) {//GEN-END:|14-getter|0|14-preInit
+    public Form getFormMain() {
+        if (formMain == null) {//GEN-END:|14-getter|0|14-preInit
             // write pre-init user code here
 
-            form = new Form("Google Auth Generator", new Item[] { getToken_stringItem() });//GEN-BEGIN:|14-getter|1|14-postInit
-            form.addCommand(getExitCommand());
-            form.addCommand(getItemCommand());
-            form.setCommandListener(this);//GEN-END:|14-getter|1|14-postInit
+            formMain = new Form("Google Auth Gen", new Item[] { getStringItemToken() });//GEN-BEGIN:|14-getter|1|14-postInit
+            formMain.addCommand(getExitCommand());
+            formMain.addCommand(getItemCommand());
+            formMain.setCommandListener(this);//GEN-END:|14-getter|1|14-postInit
             // write post-init user code here
         }//GEN-BEGIN:|14-getter|2|
-        return form;
+        return formMain;
     }
     //</editor-fold>//GEN-END:|14-getter|2|
+    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: Token_stringItem ">//GEN-BEGIN:|34-getter|0|34-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: stringItemToken ">//GEN-BEGIN:|34-getter|0|34-preInit
     /**
-     * Returns an initiliazed instance of Token_stringItem component.
+     * Returns an initiliazed instance of stringItemToken component.
      * @return the initialized component instance
      */
-    public StringItem getToken_stringItem() {
-        if (Token_stringItem == null) {//GEN-END:|34-getter|0|34-preInit
+    public StringItem getStringItemToken() {
+        if (stringItemToken == null) {//GEN-END:|34-getter|0|34-preInit
             // write pre-init user code here
-            Token_stringItem = new StringItem("Token:", "");//GEN-BEGIN:|34-getter|1|34-postInit
-            Token_stringItem.setLayout(StringItem.LAYOUT_CENTER | StringItem.LAYOUT_VCENTER);//GEN-END:|34-getter|1|34-postInit
+            stringItemToken = new StringItem("Token:", "");//GEN-BEGIN:|34-getter|1|34-postInit
+            stringItemToken.setLayout(StringItem.LAYOUT_CENTER | StringItem.LAYOUT_VCENTER);//GEN-END:|34-getter|1|34-postInit
             // write post-init user code here
         }//GEN-BEGIN:|34-getter|2|
-        return Token_stringItem;
+        return stringItemToken;
     }
     //</editor-fold>//GEN-END:|34-getter|2|
 
@@ -195,7 +198,7 @@ public class Main extends MIDlet implements CommandListener {
     public Command getItemCommand() {
         if (itemCommand == null) {//GEN-END:|59-getter|0|59-preInit
             // write pre-init user code here
-            itemCommand = new Command("New Key", "New Key", Command.ITEM, 0);//GEN-LINE:|59-getter|1|59-postInit
+            itemCommand = new Command("New Key", Command.ITEM, 0);//GEN-LINE:|59-getter|1|59-postInit
             // write post-init user code here
         }//GEN-BEGIN:|59-getter|2|
         return itemCommand;
@@ -232,38 +235,71 @@ public class Main extends MIDlet implements CommandListener {
     }
     //</editor-fold>//GEN-END:|68-getter|2|
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: form1 ">//GEN-BEGIN:|61-getter|0|61-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: formConfig ">//GEN-BEGIN:|61-getter|0|61-preInit
     /**
-     * Returns an initiliazed instance of form1 component.
+     * Returns an initiliazed instance of formConfig component.
      * @return the initialized component instance
      */
-    public Form getForm1() {
-        if (form1 == null) {//GEN-END:|61-getter|0|61-preInit
+    public Form getFormConfig() {
+        if (formConfig == null) {//GEN-END:|61-getter|0|61-preInit
             // write pre-init user code here
-            form1 = new Form("New Key", new Item[] { getSecretTextfield() });//GEN-BEGIN:|61-getter|1|61-postInit
-            form1.addCommand(getOKCommand());
-            form1.addCommand(getCancelCommand());
-            form1.setCommandListener(this);//GEN-END:|61-getter|1|61-postInit
+            formConfig = new Form("Configuration", new Item[] { getTextFieldSecretKey(), getTextFieldT0(), getTextFieldX() });//GEN-BEGIN:|61-getter|1|61-postInit
+            formConfig.addCommand(getOKCommand());
+            formConfig.addCommand(getCancelCommand());
+            formConfig.setCommandListener(this);//GEN-END:|61-getter|1|61-postInit
             // write post-init user code here
         }//GEN-BEGIN:|61-getter|2|
-        return form1;
+        return formConfig;
     }
     //</editor-fold>//GEN-END:|61-getter|2|
+    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: SecretTextfield ">//GEN-BEGIN:|71-getter|0|71-preInit
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textFieldSecretKey ">//GEN-BEGIN:|71-getter|0|71-preInit
     /**
-     * Returns an initiliazed instance of SecretTextfield component.
+     * Returns an initiliazed instance of textFieldSecretKey component.
      * @return the initialized component instance
      */
-    public TextField getSecretTextfield() {
-        if (SecretTextfield == null) {//GEN-END:|71-getter|0|71-preInit
+    public TextField getTextFieldSecretKey() {
+        if (textFieldSecretKey == null) {//GEN-END:|71-getter|0|71-preInit
             // write pre-init user code here
-            SecretTextfield = new TextField("New Secret Key:", null, 32, TextField.ANY);//GEN-LINE:|71-getter|1|71-postInit
+            textFieldSecretKey = new TextField("Secret Key:", null, 512, TextField.ANY | TextField.PASSWORD);//GEN-LINE:|71-getter|1|71-postInit
             // write post-init user code here
         }//GEN-BEGIN:|71-getter|2|
-        return SecretTextfield;
+        return textFieldSecretKey;
     }
     //</editor-fold>//GEN-END:|71-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textFieldT0 ">//GEN-BEGIN:|72-getter|0|72-preInit
+    /**
+     * Returns an initiliazed instance of textFieldT0 component.
+     * @return the initialized component instance
+     */
+    public TextField getTextFieldT0() {
+        if (textFieldT0 == null) {//GEN-END:|72-getter|0|72-preInit
+            // write pre-init user code here
+            textFieldT0 = new TextField("T0:", null, 32, TextField.ANY);//GEN-LINE:|72-getter|1|72-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|72-getter|2|
+        return textFieldT0;
+    }
+    //</editor-fold>//GEN-END:|72-getter|2|
+
+    //<editor-fold defaultstate="collapsed" desc=" Generated Getter: textFieldX ">//GEN-BEGIN:|73-getter|0|73-preInit
+    /**
+     * Returns an initiliazed instance of textFieldX component.
+     * @return the initialized component instance
+     */
+    public TextField getTextFieldX() {
+        if (textFieldX == null) {//GEN-END:|73-getter|0|73-preInit
+            // write pre-init user code here
+            textFieldX = new TextField("X:", null, 32, TextField.NUMERIC);//GEN-LINE:|73-getter|1|73-postInit
+            // write post-init user code here
+        }//GEN-BEGIN:|73-getter|2|
+        return textFieldX;
+    }
+    //</editor-fold>//GEN-END:|73-getter|2|
+
+
 
     /**
      * Returns a display instance.
@@ -313,7 +349,7 @@ public class Main extends MIDlet implements CommandListener {
 
     private class MyTimerTask extends TimerTask{
         public final void run(){
-            Token_stringItem.setText(TokenGen.genToken());
+            stringItemToken.setText(TokenGen.genToken());
         }
     }
 }
