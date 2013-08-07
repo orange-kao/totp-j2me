@@ -9,7 +9,6 @@ import java.io.*;
 public class StockDB {
 
     RecordStore rs = null;
-    public StockDB() {}
 
     public StockDB(String fileName) {
         try {
