@@ -51,7 +51,7 @@ public class Main extends MIDlet implements CommandListener {
         TokenGen = new TokenGen(TokenKey);
         timer = new Timer();
         timerTaskOne = new MyTimerTask();
-        timer.schedule(timerTaskOne, 0, 1000);
+        timer.schedule(timerTaskOne, 0, 500);
 //GEN-LINE:|0-initialize|1|0-postInitialize
         // write post-initialize user code here
     }//GEN-BEGIN:|0-initialize|2|
@@ -349,7 +349,7 @@ public class Main extends MIDlet implements CommandListener {
 
     private class MyTimerTask extends TimerTask{
         public final void run(){
-            stringItemToken.setText(TokenGen.genToken());
+            stringItemToken.setText(TokenGen.genToken().currentOtp);
         }
     }
 }

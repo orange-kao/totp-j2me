@@ -5,11 +5,8 @@ import org.bouncycastle.crypto.digests.SHA1Digest;
 import org.bouncycastle.crypto.macs.HMac;
 import org.bouncycastle.crypto.params.KeyParameter;
 import java.math.BigInteger;
+import TokenGenerator.TokenData;
 
-/**
- *
- * @author bruj0
- */
 public final class TokenGen {
     private int pinModulo = 1000000;
     private int x = 30;
@@ -17,13 +14,10 @@ public final class TokenGen {
     private byte[] decodedKey = null;
     private long previousT = 0L;
     private String previousOtp = null;
+    private String nextOtp = null;
 
     public TokenGen(String newKey) {
         reconfigure(newKey);
-    }
-    public TokenGen(String newKey, int newX) {
-        reconfigure(newKey);
-        x = newX;
     }
     public TokenGen(String newKey, int newX, long newT0) {
         reconfigure(newKey);
@@ -42,15 +36,34 @@ public final class TokenGen {
         x = newX;
         t0 = newT0;
     }
-    public String genToken() {
-        long ts = (new Date()).getTime() / 1000;
-        long t = (ts - t0) / x;
+    public TokenData genToken() {
+        long ts = ((new Date()).getTime() / 1000) - t0;
+        long t = ts / x;
+
+        TokenData returnTokenData = new TokenData();
+        returnTokenData.timeElapsed = ts % x;
+        returnTokenData.timeRemaining = x - returnTokenData.timeElapsed;
+
         if (t == previousT) {
-            return previousOtp;
+            nextOtp = privGenToken(t + 1);
+
+            returnTokenData.currentOtp = previousOtp;
+            returnTokenData.nextOtp = nextOtp;
+            return returnTokenData;
+        }
+        if ((t == previousT + 1) && (nextOtp != null)) {
+            previousT = t;
+            previousOtp = nextOtp;
+            nextOtp = null;
+
+            returnTokenData.currentOtp = previousOtp;
+            return returnTokenData;
         }
         previousT = t;
         previousOtp = privGenToken(t);
-        return previousOtp;
+
+        returnTokenData.currentOtp = previousOtp;
+        return returnTokenData;
     }
     private String privGenToken(long t) {
         String steps = "0";
